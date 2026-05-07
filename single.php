@@ -52,9 +52,19 @@ the_post();
         <!-- Share -->
         <div class="article-share">
           <span>Bagikan:</span>
-          <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode(get_permalink()); ?>&text=<?php echo urlencode(get_the_title()); ?>" target="_blank" rel="noopener">Twitter</a>
+          <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode(get_permalink()); ?>&text=<?php echo urlencode(get_the_title()); ?>" target="_blank" rel="noopener">𝕏 Twitter</a>
           <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>" target="_blank" rel="noopener">Facebook</a>
           <a href="https://wa.me/?text=<?php echo urlencode(get_the_title() . ' ' . get_permalink()); ?>" target="_blank" rel="noopener">WhatsApp</a>
+        </div>
+
+        <!-- Author Box -->
+        <div class="author-box">
+          <div class="author-avatar"><?php echo get_avatar(get_the_author_meta('ID'), 56); ?></div>
+          <div class="author-info">
+            <span class="author-label">Ditulis oleh</span>
+            <strong><?php the_author(); ?></strong>
+            <p>Artikel ini digenerate menggunakan NusaQu AI — platform yang mengubah keyword menjadi artikel SEO berkualitas tinggi secara otomatis.</p>
+          </div>
         </div>
 
         <!-- Related Posts -->
@@ -88,6 +98,22 @@ the_post();
 
       <!-- Sidebar -->
       <aside class="content-sidebar">
+        <!-- NusaQu Main Promo -->
+        <div class="sidebar-widget nq-promo-main">
+          <div class="promo-icon">🚀</div>
+          <h3>Buat Artikel Seperti Ini dalam 2 Menit</h3>
+          <p>NusaQu AI mengubah 1 keyword menjadi artikel SEO lengkap — lolos AI detector, siap publish ke WordPress.</p>
+          <ul class="promo-features">
+            <li>✓ 50 Kredit Gratis</li>
+            <li>✓ 9 Tahap AI Pipeline</li>
+            <li>✓ 99% Human Score</li>
+            <li>✓ Auto-publish WordPress</li>
+          </ul>
+          <a href="https://nusaqu.pastibisa.app/register" class="nq-btn-primary" target="_blank" rel="noopener">Coba Gratis Sekarang →</a>
+          <span class="promo-note">Tanpa kartu kredit · Setup 30 detik</span>
+        </div>
+
+        <!-- Artikel Lainnya -->
         <div class="sidebar-widget">
           <h3 class="widget-title">Artikel Lainnya</h3>
           <?php
@@ -104,6 +130,7 @@ the_post();
           <?php $i++; endwhile; wp_reset_postdata(); endif; ?>
         </div>
 
+        <!-- Kategori -->
         <div class="sidebar-widget">
           <h3 class="widget-title">Kategori</h3>
           <div class="category-list">
@@ -119,11 +146,36 @@ the_post();
           </div>
         </div>
 
-        <div class="sidebar-widget nq-promo">
-          <div class="promo-badge">🤖 AI Powered</div>
-          <h3>Buat Artikel Seperti Ini</h3>
-          <p>NusaQu generate artikel SEO berkualitas dari satu keyword. Gratis 50 kredit.</p>
-          <a href="https://nusaqu.pastibisa.app/register" class="nq-btn-primary" target="_blank" rel="noopener">Daftar Gratis →</a>
+        <!-- Plugin Promo -->
+        <div class="sidebar-widget nq-promo-plugin">
+          <div class="promo-icon">🔌</div>
+          <h3>Plugin WordPress Gratis</h3>
+          <p>Install plugin NusaQu dan generate artikel langsung dari dashboard WordPress kamu.</p>
+          <a href="https://nusaqu.pastibisa.app/plugin" class="nq-btn-outline-light" target="_blank" rel="noopener">Download Plugin →</a>
+        </div>
+
+        <!-- Pricing Teaser -->
+        <div class="sidebar-widget nq-promo-pricing">
+          <h3 class="widget-title">Paket Harga</h3>
+          <div class="pricing-mini">
+            <div class="price-item">
+              <span class="price-name">Free</span>
+              <span class="price-value">Rp 0</span>
+              <span class="price-desc">50 kredit/bulan</span>
+            </div>
+            <div class="price-item featured">
+              <span class="price-badge">Populer</span>
+              <span class="price-name">Pro</span>
+              <span class="price-value">Rp 399K</span>
+              <span class="price-desc">2.000 kredit/bulan</span>
+            </div>
+            <div class="price-item">
+              <span class="price-name">Agency</span>
+              <span class="price-value">Rp 999K</span>
+              <span class="price-desc">10.000 kredit/bulan</span>
+            </div>
+          </div>
+          <a href="https://nusaqu.pastibisa.app/#pricing" class="view-pricing" target="_blank" rel="noopener">Lihat Detail Harga →</a>
         </div>
 
         <?php dynamic_sidebar('sidebar-1'); ?>

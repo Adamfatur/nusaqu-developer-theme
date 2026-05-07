@@ -1,22 +1,21 @@
 /**
- * NusaQu Theme - Combined JS (Navigation + Animations)
+ * NusaQu Theme - Main JS
  */
 (function() {
   'use strict';
 
-  // === NAVIGATION ===
   var header = document.querySelector('.site-header');
   var menuToggle = document.querySelector('.menu-toggle');
-  var navigation = document.querySelector('.main-navigation');
-  var searchToggle = document.querySelector('.search-toggle');
-  var searchOverlay = document.querySelector('.search-overlay');
+  var navigation = document.querySelector('.main-nav');
+  var modal = document.getElementById('nqModal');
+  var modalClose = document.getElementById('modalClose');
 
-  // Sticky header
+  // Sticky header with shadow
   var ticking = false;
   window.addEventListener('scroll', function() {
     if (!ticking) {
       requestAnimationFrame(function() {
-        header.classList.toggle('scrolled', window.pageYOffset > 50);
+        header.classList.toggle('scrolled', window.pageYOffset > 30);
         ticking = false;
       });
       ticking = true;
@@ -33,16 +32,6 @@
     });
   }
 
-  // Search toggle
-  if (searchToggle && searchOverlay) {
-    searchToggle.addEventListener('click', function() {
-      searchOverlay.classList.toggle('active');
-      if (searchOverlay.classList.contains('active')) {
-        searchOverlay.querySelector('input').focus();
-      }
-    });
-  }
-
   // Close on Escape
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
@@ -51,11 +40,50 @@
         menuToggle.setAttribute('aria-expanded', 'false');
         document.body.classList.remove('menu-open');
       }
-      if (searchOverlay && searchOverlay.classList.contains('active')) {
-        searchOverlay.classList.remove('active');
+      if (modal && modal.classList.contains('active')) {
+        closeModal();
       }
     }
   });
+
+  // === MODAL POPUP ===
+  var modalShown = false;
+
+  function showModal() {
+    if (modalShown || !modal) return;
+    if (sessionStorage.getItem('nq_modal_closed')) return;
+    modal.classList.add('active');
+    modalShown = true;
+  }
+
+  function closeModal() {
+    if (!modal) return;
+    modal.classList.remove('active');
+    sessionStorage.setItem('nq_modal_closed', '1');
+  }
+
+  if (modalClose) {
+    modalClose.addEventListener('click', closeModal);
+  }
+
+  if (modal) {
+    modal.addEventListener('click', function(e) {
+      if (e.target === modal) closeModal();
+    });
+  }
+
+  // Show modal after 12 seconds OR 50% scroll
+  setTimeout(showModal, 12000);
+
+  var scrollTriggered = false;
+  window.addEventListener('scroll', function() {
+    if (scrollTriggered) return;
+    var scrollPercent = (window.pageYOffset / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+    if (scrollPercent > 50) {
+      scrollTriggered = true;
+      showModal();
+    }
+  }, { passive: true });
 
   // === SCROLL ANIMATIONS ===
   var observer = new IntersectionObserver(function(entries) {
@@ -72,18 +100,18 @@
     for (var i = 0; i < els.length; i++) observer.observe(els[i]);
   });
 
-  // === READING PROGRESS (single posts) ===
+  // === READING PROGRESS ===
   var progressBar = document.querySelector('.reading-progress');
   if (progressBar) {
-    var progressTicking = false;
+    var pTicking = false;
     window.addEventListener('scroll', function() {
-      if (!progressTicking) {
+      if (!pTicking) {
         requestAnimationFrame(function() {
           var h = document.documentElement.scrollHeight - window.innerHeight;
           progressBar.style.width = Math.min((window.pageYOffset / h) * 100, 100) + '%';
-          progressTicking = false;
+          pTicking = false;
         });
-        progressTicking = true;
+        pTicking = true;
       }
     }, { passive: true });
   }

@@ -136,28 +136,7 @@ get_header();
       </div>
 
       <!-- Pricing -->
-      <div class="sidebar-widget nq-promo-pricing">
-        <h3 class="widget-title">Paket Harga</h3>
-        <div class="pricing-mini">
-          <div class="price-item">
-            <span class="price-name">Free</span>
-            <span class="price-value">Rp 0</span>
-            <span class="price-desc">50 kredit/bulan</span>
-          </div>
-          <div class="price-item featured">
-            <span class="price-badge">Populer</span>
-            <span class="price-name">Pro</span>
-            <span class="price-value">Rp 399K</span>
-            <span class="price-desc">2.000 kredit/bulan</span>
-          </div>
-          <div class="price-item">
-            <span class="price-name">Agency</span>
-            <span class="price-value">Rp 999K</span>
-            <span class="price-desc">10.000 kredit/bulan</span>
-          </div>
-        </div>
-        <a href="https://nusaqu.pastibisa.app/#pricing" class="view-pricing" target="_blank" rel="noopener">Lihat Detail Harga →</a>
-      </div>
+      <?php // Removed pricing widget per request ?>
 
       <?php dynamic_sidebar('sidebar-1'); ?>
     </aside>

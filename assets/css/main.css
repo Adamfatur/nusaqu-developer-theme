@@ -26,8 +26,8 @@
 
 /* --- Reset --- */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
-body{font-family:var(--nq-font);font-size:16px;line-height:1.7;color:var(--nq-text);background:var(--nq-light);overflow-x:hidden}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{font-family:var(--nq-font);font-size:16px;line-height:1.7;color:var(--nq-text);background:var(--nq-light);overflow-x:hidden;position:relative;width:100%;max-width:100vw}
 a{color:var(--nq-primary);text-decoration:none;transition:var(--nq-transition)}
 a:hover{color:var(--nq-primary-dark)}
 img{max-width:100%;height:auto;display:block}
@@ -38,7 +38,7 @@ h3{font-size:1.125rem}
 p{margin-bottom:1rem;color:var(--nq-text-2)}
 ::selection{background:var(--nq-primary);color:#fff}
 
-.nq-container{max-width:1280px;margin:0 auto;padding:0 1.25rem}
+.nq-container{max-width:1280px;margin:0 auto;padding:0 1.25rem;width:100%}
 
 /* --- Header --- */
 .site-header{position:sticky;top:0;z-index:1000;background:rgba(15,23,42,.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.06)}
@@ -71,9 +71,9 @@ body.menu-open{overflow:hidden}
 .home-layout,.single-layout{display:grid;grid-template-columns:1fr 320px;gap:2.5rem;align-items:start}
 
 /* --- Hero Slider --- */
-.hero-slider{position:relative;border-radius:var(--nq-radius);overflow:hidden;margin-bottom:2rem}
-.slider-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1)}
-.slider-slide{min-width:100%;position:relative}
+.hero-slider{position:relative;border-radius:var(--nq-radius);overflow:hidden;margin-bottom:2rem;width:100%}
+.slider-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1);width:100%}
+.slider-slide{min-width:100%;max-width:100%;position:relative;flex-shrink:0}
 .slider-slide .hero-thumb{display:block;aspect-ratio:2.2/1;overflow:hidden}
 .slider-slide .hero-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
 .slider-slide:hover .hero-thumb img{transform:scale(1.03)}
@@ -326,9 +326,9 @@ body.menu-open{overflow:hidden}
   .cta-actions{flex-direction:row;justify-content:center}
 }
 @media(max-width:768px){
-  /* Mobile Navigation */
-  .main-nav{position:fixed;top:64px;left:0;right:0;bottom:0;background:rgba(15,23,42,.98);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:1.5rem;transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);z-index:999;overflow-y:auto;display:flex;flex-direction:column}
-  .main-nav.toggled{transform:translateX(0)}
+  /* Mobile Navigation — use clip-path instead of transform to prevent horizontal scroll */
+  .main-nav{position:fixed;top:64px;left:0;right:0;bottom:0;background:rgba(15,23,42,.98);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:1.5rem;clip-path:inset(0 0 0 100%);transition:clip-path .3s cubic-bezier(.4,0,.2,1);z-index:999;overflow-y:auto;display:flex;flex-direction:column}
+  .main-nav.toggled{clip-path:inset(0 0 0 0)}
   .main-nav ul{flex-direction:column;gap:.25rem}
   .main-nav li a{font-size:1.05rem;padding:.85rem 1rem;border-radius:8px;color:rgba(255,255,255,.85)}
   .main-nav li a:hover,.main-nav li.current-menu-item a{background:rgba(37,99,235,.15);color:#fff}
@@ -350,8 +350,8 @@ body.menu-open{overflow:hidden}
   .cta-actions a{text-align:center}
 
   /* Modal - properly responsive */
-  .nq-modal-overlay{padding:1rem;align-items:flex-end}
-  .nq-modal{padding:1.75rem 1.5rem;max-width:100%;border-radius:16px 16px 0 0;margin:0;transform:scale(1) translateY(100%)}
+  .nq-modal-overlay{padding:0;align-items:flex-end}
+  .nq-modal{padding:1.75rem 1.5rem;max-width:100%;width:100%;border-radius:16px 16px 0 0;margin:0;transform:scale(1) translateY(100%);box-shadow:0 -10px 40px rgba(0,0,0,.3)}
   .nq-modal-overlay.active .nq-modal{transform:scale(1) translateY(0)}
   .nq-modal h2{font-size:1.2rem}
   .nq-modal p{font-size:.85rem}
@@ -429,4 +429,5 @@ body.menu-open{overflow:hidden}
   .fade-in{opacity:1;transform:none;transition:none}
   .main-nav{transition:none}
   .nq-modal{transition:none}
+  .slider-track{transition:none}
 }

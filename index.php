@@ -11,28 +11,43 @@ get_header();
     <!-- Main Content -->
     <div class="content-main">
 
-      <?php if (have_posts() && !is_paged()) : the_post(); ?>
-      <!-- Hero Featured Article -->
-      <article class="hero-card fade-in">
-        <a href="<?php the_permalink(); ?>" class="hero-thumb">
-          <?php if (has_post_thumbnail()) : the_post_thumbnail('nusaqu-hero'); else : ?>
-          <img src="<?php echo NUSAQU_THEME_URI; ?>/assets/img/placeholder.svg" alt="">
-          <?php endif; ?>
-          <div class="hero-overlay"></div>
-        </a>
-        <div class="hero-content">
-          <?php $cats = get_the_category(); if ($cats) : ?>
-          <a href="<?php echo get_category_link($cats[0]->term_id); ?>" class="badge"><?php echo esc_html($cats[0]->name); ?></a>
-          <?php endif; ?>
-          <h2 class="hero-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-          <p class="hero-excerpt"><?php echo get_the_excerpt(); ?></p>
-          <div class="hero-meta">
-            <span class="meta-author"><?php echo get_avatar(get_the_author_meta('ID'), 24); ?> <?php the_author(); ?></span>
-            <span class="meta-date"><?php echo get_the_date(); ?></span>
-            <span class="meta-read"><?php echo nusaqu_reading_time(); ?></span>
-          </div>
+      <?php
+      // Get latest 5 posts for slider
+      $slider_posts = new WP_Query(array('posts_per_page' => 5, 'ignore_sticky_posts' => true));
+      if ($slider_posts->have_posts()) :
+      ?>
+      <!-- Hero Slider -->
+      <div class="hero-slider">
+        <div class="slider-track">
+          <?php while ($slider_posts->have_posts()) : $slider_posts->the_post(); ?>
+          <article class="slider-slide">
+            <a href="<?php the_permalink(); ?>" class="hero-thumb">
+              <?php if (has_post_thumbnail()) : the_post_thumbnail('nusaqu-hero'); else : ?>
+              <img src="<?php echo NUSAQU_THEME_URI; ?>/assets/img/placeholder.svg" alt="">
+              <?php endif; ?>
+              <div class="hero-overlay"></div>
+            </a>
+            <div class="hero-content">
+              <?php $cats = get_the_category(); if ($cats) : ?>
+              <a href="<?php echo get_category_link($cats[0]->term_id); ?>" class="badge"><?php echo esc_html($cats[0]->name); ?></a>
+              <?php endif; ?>
+              <h2 class="hero-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
+              <p class="hero-excerpt"><?php echo get_the_excerpt(); ?></p>
+              <div class="hero-meta">
+                <span class="meta-author"><?php echo get_avatar(get_the_author_meta('ID'), 24); ?> <?php the_author(); ?></span>
+                <span class="meta-date"><?php echo get_the_date(); ?></span>
+                <span class="meta-read"><?php echo nusaqu_reading_time(); ?></span>
+              </div>
+            </div>
+          </article>
+          <?php endwhile; wp_reset_postdata(); ?>
         </div>
-      </article>
+        <div class="slider-controls">
+          <button class="slider-btn slider-prev" aria-label="Previous">‹</button>
+          <div class="slider-dots"></div>
+          <button class="slider-btn slider-next" aria-label="Next">›</button>
+        </div>
+      </div>
       <?php endif; ?>
 
       <!-- Article Grid -->

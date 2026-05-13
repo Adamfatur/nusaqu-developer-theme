@@ -6,7 +6,7 @@
 
 if (!defined('ABSPATH')) exit;
 
-define('NUSAQU_THEME_VERSION', '1.1.0');
+define('NUSAQU_THEME_VERSION', '1.2.1');
 define('NUSAQU_THEME_DIR', get_template_directory());
 define('NUSAQU_THEME_URI', get_template_directory_uri());
 
@@ -57,8 +57,14 @@ function nusaqu_cleanup() {
     remove_action('wp_head', 'wp_shortlink_wp_head');
     wp_dequeue_style('classic-theme-styles');
     wp_dequeue_style('global-styles');
+    wp_dequeue_style('wp-block-library');
+    wp_dequeue_style('wp-block-library-theme');
 }
 add_action('wp_enqueue_scripts', 'nusaqu_cleanup', 100);
+
+// Remove global styles and SVG filters that can cause layout issues
+remove_action('wp_enqueue_scripts', 'wp_enqueue_global_styles');
+remove_action('wp_body_open', 'wp_global_styles_render_svg_filters');
 
 // Register sidebars
 function nusaqu_widgets_init() {

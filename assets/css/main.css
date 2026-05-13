@@ -26,8 +26,10 @@
 
 /* --- Reset --- */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-body{font-family:var(--nq-font);font-size:16px;line-height:1.7;color:var(--nq-text);background:var(--nq-light);overflow-x:hidden;position:relative;width:100%;max-width:100vw}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased;overflow-x:hidden!important}
+body{font-family:var(--nq-font);font-size:16px;line-height:1.7;color:var(--nq-text);background:var(--nq-light);overflow-x:hidden!important;position:relative;width:100%;max-width:100vw}
+#page,.site-header,.site-main,.site-footer,.nq-cta,.nq-modal-overlay{max-width:100vw;overflow-x:hidden}
+img:is([sizes="auto" i],[sizes^="auto," i]){contain-intrinsic-size:none!important}
 a{color:var(--nq-primary);text-decoration:none;transition:var(--nq-transition)}
 a:hover{color:var(--nq-primary-dark)}
 img{max-width:100%;height:auto;display:block}
@@ -41,7 +43,7 @@ p{margin-bottom:1rem;color:var(--nq-text-2)}
 .nq-container{max-width:1280px;margin:0 auto;padding:0 1.25rem;width:100%}
 
 /* --- Header --- */
-.site-header{position:sticky;top:0;z-index:1000;background:rgba(15,23,42,.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.06)}
+.site-header{position:sticky;top:0;z-index:1000;background:rgba(15,23,42,.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.06);width:100%}
 .site-header.scrolled{box-shadow:0 4px 20px rgba(0,0,0,.3)}
 .header-inner{display:flex;align-items:center;height:64px;gap:1rem}
 .site-logo img{height:44px;width:auto}
@@ -57,13 +59,13 @@ p{margin-bottom:1rem;color:var(--nq-text-2)}
 .header-search input::placeholder{color:rgba(255,255,255,.35)}
 .header-cta{display:inline-flex;align-items:center;padding:.4rem .9rem;background:linear-gradient(135deg,var(--nq-primary),var(--nq-accent));color:#fff;font-size:.75rem;font-weight:600;border-radius:20px;transition:var(--nq-transition);white-space:nowrap}
 .header-cta:hover{transform:translateY(-1px);box-shadow:0 4px 15px var(--nq-primary-glow);color:#fff}
-.menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:.5rem;flex-direction:column;gap:5px;width:36px;height:36px;align-items:center;justify-content:center;border-radius:6px;transition:var(--nq-transition)}
+.menu-toggle{display:none;background:none;border:none;cursor:pointer;padding:.5rem;flex-direction:column;gap:5px;width:36px;height:36px;align-items:center;justify-content:center;border-radius:6px;transition:var(--nq-transition);z-index:1001;position:relative}
 .menu-toggle:hover{background:rgba(255,255,255,.08)}
 .menu-toggle span{display:block;width:20px;height:2px;background:#fff;border-radius:2px;transition:var(--nq-transition);transform-origin:center}
 .menu-toggle[aria-expanded="true"] span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
 .menu-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;transform:scaleX(0)}
 .menu-toggle[aria-expanded="true"] span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
-body.menu-open{overflow:hidden}
+body.menu-open{overflow:hidden!important}
 
 /* --- Homepage Layout --- */
 .site-main{padding:0}
@@ -326,9 +328,9 @@ body.menu-open{overflow:hidden}
   .cta-actions{flex-direction:row;justify-content:center}
 }
 @media(max-width:768px){
-  /* Mobile Navigation — use clip-path instead of transform to prevent horizontal scroll */
-  .main-nav{position:fixed;top:64px;left:0;right:0;bottom:0;background:rgba(15,23,42,.98);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:1.5rem;clip-path:inset(0 0 0 100%);transition:clip-path .3s cubic-bezier(.4,0,.2,1);z-index:999;overflow-y:auto;display:flex;flex-direction:column}
-  .main-nav.toggled{clip-path:inset(0 0 0 0)}
+  /* Mobile Navigation — positioned off-screen to the left (no horizontal scroll) */
+  .main-nav{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(15,23,42,.98);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);padding:80px 1.5rem 1.5rem;z-index:998;overflow-y:auto;display:flex;flex-direction:column;opacity:0;visibility:hidden;transition:opacity .3s ease,visibility .3s ease}
+  .main-nav.toggled{opacity:1;visibility:visible}
   .main-nav ul{flex-direction:column;gap:.25rem}
   .main-nav li a{font-size:1.05rem;padding:.85rem 1rem;border-radius:8px;color:rgba(255,255,255,.85)}
   .main-nav li a:hover,.main-nav li.current-menu-item a{background:rgba(37,99,235,.15);color:#fff}
